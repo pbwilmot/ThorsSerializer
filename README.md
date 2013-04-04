@@ -74,11 +74,13 @@ Example: (see code in test.cpp for full code)
     struct JsonSerializeTraits<MyClass>
     {   
         // This says serialize as a JSON object.
+        typedef TestUnsignedLongLong    LocalType;
+	    typedef void					ParentType;
         static JsonSerializeType const  type    = Map;
 
-        THORSANVIL_SERIALIZE_JsonAttribute(MyClass, data1);
-        THORSANVIL_SERIALIZE_JsonAttribute(MyClass, data2);
-        THORSANVIL_SERIALIZE_JsonAttribute(MyClass, data3);
+        THORSANVIL_SERIALIZE_JsonAttribute(data1);
+        THORSANVIL_SERIALIZE_JsonAttribute(data2);
+        THORSANVIL_SERIALIZE_JsonAttribute(data3);
 
         // This type indicates what fields need to be serialize/de-serialzied.
         typedef boost::mpl::vector<data1, data2, data3>         SerializeInfo;
