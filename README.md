@@ -65,27 +65,15 @@ Example: (see code in test.cpp for full code)
         friend struct ThorsAnvil::Serialize::Json::JsonSerializeTraits<MyClass>;
     };  
 
+
     /*  
      * Though there is no code involved, you do need to set up
      * this structure to tell the library what fields need to be serialized.
+     * To do this use the macro:  BUILD_SERIALIZE()
+     * Specifying parents to serialize(or void), your class, a list of members to serialize.
      */  
-    namespace ThorsAnvil { namespace Serialize { namespace Json {
-    template<>
-    struct JsonSerializeTraits<MyClass>
-    {   
-        // This says serialize as a JSON object.
-        typedef TestUnsignedLongLong    LocalType;
-	    typedef void					ParentType;
-        static JsonSerializeType const  type    = Map;
+    BUILD_SERIALIZE(void, MyClass, data1, data2, data3)
 
-        THORSANVIL_SERIALIZE_JsonAttribute(data1);
-        THORSANVIL_SERIALIZE_JsonAttribute(data2);
-        THORSANVIL_SERIALIZE_JsonAttribute(data3);
-
-        // This type indicates what fields need to be serialize/de-serialzied.
-        typedef boost::mpl::vector<data1, data2, data3>         SerializeInfo;
-    };  
-    }}} 
 
     # Build
     > g++ -o test test.cpp -lserialize -ljson

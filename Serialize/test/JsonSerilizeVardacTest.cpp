@@ -7,10 +7,12 @@
 using ThorsAnvil::Serialize::jsonImport;
 using ThorsAnvil::Serialize::jsonExport;
 
-struct Config
+class Config
 {
     int         valInt;
     double      valDouble;
+
+    friend class ThorsAnvil::Serialize::Json::JsonSerializeTraits<Config>;
 };
 
 BUILD_SERIALIZE(void, Config, valInt, valDouble)
