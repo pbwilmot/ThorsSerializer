@@ -76,6 +76,10 @@
 #include <iostream>
 #include <sstream>
 
+#if(__cplusplus > 199711L)
+
+/* In C++11 use Vardc macros to help reduce boilerplate */
+
 #define BUILD_SERIALIZE_CHAIN1(MACRO, MACRO_END, _1)                                  MACRO_END(_1)
 #define BUILD_SERIALIZE_CHAIN2(MACRO, MACRO_END, _1, _2)                              MACRO(_1) MACRO_END(_2)
 #define BUILD_SERIALIZE_CHAIN3(MACRO, MACRO_END, _1, _2, _3)                          MACRO(_1) MACRO(_2) MACRO_END(_3)
@@ -120,7 +124,7 @@ namespace Json       {                                  \
     };                                                  \
 }}} 
 
-
+#endif
 
 
 /*
