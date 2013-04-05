@@ -5,10 +5,15 @@ OBJ     = $(patsubst %.cpp,%.o,$(SRC))
 CXXFLAGS += -Wno-c++11-extensions
 CPPFLAGS += -I.  -Ibuild/include -Ibuild/include3rd
 
-serialize.a:    $(OBJ)
+serialize.a: build $(OBJ)
 	$(AR) $(ARFLAGS) $@ $(OBJ)
 
 Json/ParserRecursive.cpp: Json/ParserShiftReduce.tab.cpp
+
+.PHONY: build
+
+build:
+	@ if ( ! test -f build/include/portability.h ); then echo "Getting GIT STUFF"; git submodule init ; git submodule update; fi
 
 %.o: %.cpp
 	$(CXX) -c $^ -o $@ $(CPPFLAGS) $(CXXFLAGS)
