@@ -20,14 +20,54 @@
             }   
     };  
 
-    /*  
-     * Though there is no code involved, you do need to set up
-     * this structure to tell the library what fields need to be serialized.
+    /*
+     * You can manually set up a structure that defines the traits.
+     * But I was convinced that the process needs to be simplified.
+     * So the following macros builds the serialization class for you.
      */  
-    namespace ThorsAnvil { namespace Serialize { namespace Json {
+    JsonSerializeTraits_MAKE(void, MyClass, data1, data2, data3)
+
+
+    int main()
+    {   
+        MyClass     obj(56, 23.456, "Hi there");
+
+        // Outputs the object using the stream operator
+        std::cout << obj << "\n";
+
+        // Outputs the object in json.
+        // Note: No intermediate object is made it scans the object
+        std::cout << ThorsAnvil::Serialize::jsonExport(obj) << "\n";
+
+        // This reads JSON and converts it into calls that populate
+        // the object. So if you type a valid json object and update it
+        //
+        // try typing this: =>  { "data": 2345 }
+        std::cin  >> ThorsAnvil::Serialize::jsonImport(obj);
+
+
+        // Now print out the object again to prove it was changed.
+        std::cout << obj << "\n";
+    }
+
+
+
+    /*
+     * The following is for documentation:
+     * The above macro JsonSerializeTraits_MAKE() expands to the following code
+
+    namespace ThorsAnvil
+    {
+        namespace Serialize
+        {
+            namespace Json
+            {
+
     template<>
     struct JsonSerializeTraits<MyClass>
-    {   
+    {
+        typedef MyClass             LocalType;
+        typedef void                ParentType;
         static JsonSerializeType const  type    = Map;
 
         THORSANVIL_SERIALIZE_JsonAttribute(MyClass, data1);
@@ -35,16 +75,11 @@
         THORSANVIL_SERIALIZE_JsonAttribute(MyClass, data3);
         typedef boost::mpl::vector<data1, data2, data3>         SerializeInfo;
     };  
-    }}} 
 
-    int main()
-    {   
-        MyClass     obj(56, 23.456, "Hi there");
-        std::cout << obj << "\n";
-        std::cout << ThorsAnvil::Serialize::jsonExport(obj) << "\n";
+            }
+        }
+    }
 
-        std::cin  >> ThorsAnvil::Serialize::jsonImport(obj);
-        std::cout << obj << "\n";
-    }   
+     */
 
 
