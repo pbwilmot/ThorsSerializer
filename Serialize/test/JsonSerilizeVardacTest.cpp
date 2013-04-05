@@ -15,7 +15,9 @@ class Config
     friend class ThorsAnvil::Serialize::Json::JsonSerializeTraits<Config>;
 };
 
+#if(__cplusplus > 199711L)
 BUILD_SERIALIZE(void, Config, valInt, valDouble)
+#endif
 template<typename T>
 std::string testAction(std::string const& expected)
 {
@@ -35,8 +37,10 @@ extern void ValidateSerializedStrings(std::string lhs, std::string rhs);
 
 TEST(JsonSerializeVardac, Serialize)
 {
+#if(__cplusplus > 199711L)
     std::string input   = "{\"valInt\": 12, \"valDouble\":1234.45}";
     std::string result  = testAction<Config>(input);
     ValidateSerializedStrings(input, result);
+#endif
 }
 
