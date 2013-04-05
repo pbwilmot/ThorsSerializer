@@ -80,33 +80,33 @@
 
 /* In C++11 use Vardc macros to help reduce boilerplate */
 
-#define BUILD_SERIALIZE_CHAIN1(MACRO, MACRO_END, _1)                                  MACRO_END(_1)
-#define BUILD_SERIALIZE_CHAIN2(MACRO, MACRO_END, _1, _2)                              MACRO(_1) MACRO_END(_2)
-#define BUILD_SERIALIZE_CHAIN3(MACRO, MACRO_END, _1, _2, _3)                          MACRO(_1) MACRO(_2) MACRO_END(_3)
-#define BUILD_SERIALIZE_CHAIN4(MACRO, MACRO_END, _1, _2, _3, _4)                      MACRO(_1) MACRO(_2) MACRO(_3) MACRO_END(_4)
-#define BUILD_SERIALIZE_CHAIN5(MACRO, MACRO_END, _1, _2, _3, _4, _5)                  MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO_END(_5)
-#define BUILD_SERIALIZE_CHAIN6(MACRO, MACRO_END, _1, _2, _3, _4, _5, _6)              MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO(_5) MACRO_END(_6)
-#define BUILD_SERIALIZE_CHAIN7(MACRO, MACRO_END, _1, _2, _3, _4, _5, _6, _7)          MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO(_5) MACRO(_6) MACRO_END(_7)
-#define BUILD_SERIALIZE_CHAIN8(MACRO, MACRO_END, _1, _2, _3, _4, _5, _6, _7, _8)      MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO(_5) MACRO(_6) MACRO(_7) MACRO_END(_8)
-#define BUILD_SERIALIZE_CHAIN9(MACRO, MACRO_END, _1, _2, _3, _4, _5, _6, _7, _8, _9)  MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO(_5) MACRO(_6) MACRO(_7) MACRO(_8) MACRO_END(_9)
+#define THOR_BUILD_SERIALIZE_CHAIN1(MACRO, MACRO_END, _1)                                  MACRO_END(_1)
+#define THOR_BUILD_SERIALIZE_CHAIN2(MACRO, MACRO_END, _1, _2)                              MACRO(_1) MACRO_END(_2)
+#define THOR_BUILD_SERIALIZE_CHAIN3(MACRO, MACRO_END, _1, _2, _3)                          MACRO(_1) MACRO(_2) MACRO_END(_3)
+#define THOR_BUILD_SERIALIZE_CHAIN4(MACRO, MACRO_END, _1, _2, _3, _4)                      MACRO(_1) MACRO(_2) MACRO(_3) MACRO_END(_4)
+#define THOR_BUILD_SERIALIZE_CHAIN5(MACRO, MACRO_END, _1, _2, _3, _4, _5)                  MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO_END(_5)
+#define THOR_BUILD_SERIALIZE_CHAIN6(MACRO, MACRO_END, _1, _2, _3, _4, _5, _6)              MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO(_5) MACRO_END(_6)
+#define THOR_BUILD_SERIALIZE_CHAIN7(MACRO, MACRO_END, _1, _2, _3, _4, _5, _6, _7)          MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO(_5) MACRO(_6) MACRO_END(_7)
+#define THOR_BUILD_SERIALIZE_CHAIN8(MACRO, MACRO_END, _1, _2, _3, _4, _5, _6, _7, _8)      MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO(_5) MACRO(_6) MACRO(_7) MACRO_END(_8)
+#define THOR_BUILD_SERIALIZE_CHAIN9(MACRO, MACRO_END, _1, _2, _3, _4, _5, _6, _7, _8, _9)  MACRO(_1) MACRO(_2) MACRO(_3) MACRO(_4) MACRO(_5) MACRO(_6) MACRO(_7) MACRO(_8) MACRO_END(_9)
 
-#define BUILD_SERIALIZE_CHAIN_INC(MACRO, MACRO_END, SIZE, ...) BUILD_SERIALIZE_CHAIN  ## SIZE (MACRO, MACRO_END, __VA_ARGS__)
-#define BUILD_SERIALIZE_CHAIN(MACRO, SIZE, ...)     BUILD_SERIALIZE_CHAIN_INC(BUILD_SERIALIZE_ ## MACRO, BUILD_SERIALIZE_ ## MACRO ## _END, SIZE, __VA_ARGS__)
+#define THOR_BUILD_SERIALIZE_CHAIN_INC(MACRO, MACRO_END, SIZE, ...) THOR_BUILD_SERIALIZE_CHAIN  ## SIZE (MACRO, MACRO_END, __VA_ARGS__)
+#define THOR_BUILD_SERIALIZE_CHAIN(MACRO, SIZE, ...)     THOR_BUILD_SERIALIZE_CHAIN_INC(THOR_BUILD_SERIALIZE_ ## MACRO, THOR_BUILD_SERIALIZE_ ## MACRO ## _END, SIZE, __VA_ARGS__)
 
-#define BUILD_SERIALIZE_COUNT_ARGS(...)             BUILD_SERIALIZE_COUNT_ARGS_ACT( __VA_ARGS__, 9, 8, 7, 6, 5, 4, 3, 2, 1 )
-#define BUILD_SERIALIZE_COUNT_ARGS_ACT(_1,_2,_3,_4,_5,_6,_7,_8,_9,N,...)   N
+#define THOR_BUILD_SERIALIZE_COUNT_ARGS(...)             THOR_BUILD_SERIALIZE_COUNT_ARGS_ACT( __VA_ARGS__, 9, 8, 7, 6, 5, 4, 3, 2, 1 )
+#define THOR_BUILD_SERIALIZE_COUNT_ARGS_ACT(_1,_2,_3,_4,_5,_6,_7,_8,_9,N,...)   N
 
-#define BUILD_SERIALIZE_TYPES(...)                  BUILD_SERIALIZE_CHAIN(TYPES_VAL, BUILD_SERIALIZE_COUNT_ARGS( __VA_ARGS__), __VA_ARGS__ )
-#define BUILD_SERIALIZE_TYPES_VAL(val)              THORSANVIL_SERIALIZE_JsonAttribute(val);
-#define BUILD_SERIALIZE_TYPES_VAL_END(val)          THORSANVIL_SERIALIZE_JsonAttribute(val);
-
-
-#define BUILD_SERIALIZE_INFO(...)                   BUILD_SERIALIZE_CHAIN(INFO_VAL, BUILD_SERIALIZE_COUNT_ARGS( __VA_ARGS__) , __VA_ARGS__ )
-#define BUILD_SERIALIZE_INFO_VAL(val)               val,
-#define BUILD_SERIALIZE_INFO_VAL_END(val)           val
+#define THOR_BUILD_SERIALIZE_TYPES(...)                  THOR_BUILD_SERIALIZE_CHAIN(TYPES_VAL, THOR_BUILD_SERIALIZE_COUNT_ARGS( __VA_ARGS__), __VA_ARGS__ )
+#define THOR_BUILD_SERIALIZE_TYPES_VAL(val)              THORSANVIL_SERIALIZE_JsonAttribute(val);
+#define THOR_BUILD_SERIALIZE_TYPES_VAL_END(val)          THORSANVIL_SERIALIZE_JsonAttribute(val);
 
 
-#define BUILD_SERIALIZE(parent, local, ...)             \
+#define THOR_BUILD_SERIALIZE_INFO(...)                   THOR_BUILD_SERIALIZE_CHAIN(INFO_VAL, THOR_BUILD_SERIALIZE_COUNT_ARGS( __VA_ARGS__) , __VA_ARGS__ )
+#define THOR_BUILD_SERIALIZE_INFO_VAL(val)               val,
+#define THOR_BUILD_SERIALIZE_INFO_VAL_END(val)           val
+
+
+#define THOR_BUILD_SERIALIZE(parent, local, ...)        \
 namespace ThorsAnvil {                                  \
 namespace Serialize  {                                  \
 namespace Json       {                                  \
@@ -123,6 +123,17 @@ namespace Json       {                                  \
         > SerializeInfo;                                \
     };                                                  \
 }}} 
+
+/*
+ * Note: This code should be used outside all namespace.
+ *       I considered forces people to manually put in the namspace
+ *       But it looks ugly.
+ *      
+ *       We will let it be a learning curve;
+ *       You will probably get it wrong and then come and read the source.
+ *       look at the test.cpp file for an example of usage.
+ */
+#define JsonSerializeTraits_MAKE(parent,local, ...)     THOR_BUILD_SERIALIZE(parent, local, __VA_ARGS__)
 
 #endif
 

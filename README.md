@@ -2,6 +2,25 @@
 
 Yet another JSON serialization library for C++
 
+Objective:
+
+    The objective is to make serialization/de-serialization of C++ object to/from
+    JSON trivial.
+
+    This means:
+        1) does not build a JSON object. Reads data directly into C++ object.
+        2) In normal usage there should be NO need to write any code.
+        3) User should not need to understand JSON or validate its input.
+        4) Should work seamlessly with streams.
+        5) Standard containers should automatically work
+
+    I am not concerned about speed.
+    Though my trivial test work just fine in terms of speed.
+    
+    The design was done with the primary goal of communicating with WEB-Servers
+    that speak JSON. The main envisioned usage was for mobile devices were many
+    small JSON objects are transfered in both directions.
+
 Build instructions (SIMPLE)
 
     make -f MakeSimple
@@ -33,26 +52,7 @@ Building Notes:
     make install
 
 
-Objective:
-
-    The objective is to make serialization/de-serialization of C++ object to/from
-    JSON trivial.
-
-    This means:
-        1) does not build a JSON object. Reads data directly into C++ object.
-        2) In normal usage there should be NO need to write any code.
-        3) User should not need to understand JSON or validate its input.
-        4) Should work seamlessly with streams.
-        5) Standard containers should automatically work
-
-    I am not concerned about speed.
-    Though my trivial test work just fine in terms of speed.
-    
-    The design was done with the primary goal of communicating with WEB-Servers
-    that speak JSON. The main envisioned usage was for mobile devices were many
-    small JSON objects are transfered in both directions.
-
-Example: (see code in test.cpp for full code)
+Example: C++11 (see code in test.cpp for full code)
 
     /* A class that you want to serialize. */
     class MyClass
@@ -69,10 +69,10 @@ Example: (see code in test.cpp for full code)
     /*  
      * Though there is no code involved, you do need to set up
      * this structure to tell the library what fields need to be serialized.
-     * To do this use the macro:  BUILD_SERIALIZE()
+     * To do this use the macro:  JsonSerializeTraits_MAKE()
      * Specifying parents to serialize(or void), your class, a list of members to serialize.
      */  
-    BUILD_SERIALIZE(void, MyClass, data1, data2, data3)
+    JsonSerializeTraits_MAKE(void, MyClass, data1, data2, data3)
 
 
     # Build
