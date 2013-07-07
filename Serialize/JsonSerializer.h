@@ -614,6 +614,8 @@ struct JsonSerializer
  *                  to register subsequent actions recursively so we always read directly into an object
  *                  not a copy.
  */
+template<typename T>
+Exporter<T, typename JsonSerializer::template Printer<T> >  jsonInternalExport(T const& object);
 template<typename T, typename MP, typename SerTraits>
 class JsonSerialElementAccessor
 {
