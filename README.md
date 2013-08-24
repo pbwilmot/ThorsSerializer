@@ -73,14 +73,29 @@ Example: C++11 (see code in test.cpp for full code)
      * Specifying parents to serialize(or void), your class, a list of members to serialize.
      */  
     JsonSerializeTraits_MAKE(void, MyClass, data1, data2, data3)
+    
+This allaws us to import and export object of the abvove class really easily.
 
+    MyCLass   data;
+    data.data1  = 56;
+    data.data2  = 23.456;
+    data.data3  = "Hi there";
+    
+    std::cout << ThorsAnvil::Serializer::jsonExport(data) << "\n";
 
-    # Build
-    > g++ -o test test.cpp -lserialize -ljson
+This generates:
 
-    # The MyClass object is serialize as:
     {"data1": 56 ,"data2": 23.456 ,"data3": "Hi there" }
 
+It will also handle all standard containers automaticaly:
+
+    std::vector<MyClass>   vec(data, 4);
+    std::cout << ThorsAnvil::Serializer::jsonExport(vec) << "\n";
+    
+    // Results in:
+    [{"data1": 56 ,"data2": 23.456 ,"data3": "Hi there" }, {"data1": 56 ,"data2": 23.456 ,"data3": "Hi there" }, {"data1": 56 ,"data2": 23.456 ,"data3": "Hi there" }, {"data1": 56 ,"data2": 23.456 ,"data3": "Hi there" } ]
+    
+    
 
 
 
