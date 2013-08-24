@@ -89,7 +89,7 @@ This generates:
 
 It will also handle all standard containers automaticaly:
 
-    std::vector<MyClass>   vec(data, 4);
+    std::vector<MyClass>   vec(4, data);
     std::cout << ThorsAnvil::Serializer::jsonExport(vec) << "\n";
     
     // Results in:
