@@ -67,7 +67,7 @@ ActionRefNote ScannerSax::registerActionOnAllMapItems(std::unique_ptr<SaxAction>
 {
     // \xFF is an invalid UTF-8 character
     // The parser will never generate mapItem of this string
-    return registerAction("\xFF", SMART_OWNED_MOVE(action));
+    return registerAction("\xFF", std::move(action));
 }
 ActionRefNote ScannerSax::registerAction(std::string const& mapItem, std::unique_ptr<SaxAction> action)
 {

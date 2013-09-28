@@ -119,7 +119,7 @@ struct JsonValue
 struct JsonStringItem: JsonValue
 {
     std::unique_ptr<std::string>     value;
-    JsonStringItem(std::unique_ptr<std::string>& data): value(SMART_OWNED_MOVE(data)) {}
+    JsonStringItem(std::unique_ptr<std::string>& data): value(std::move(data)) {}
 
     virtual void print(std::ostream& stream) const    { stream << '"' << *value << '"'; }
     private:
@@ -128,7 +128,7 @@ struct JsonStringItem: JsonValue
 struct JsonNumberItem: JsonValue
 {
     std::unique_ptr<std::string>     value;
-    JsonNumberItem(std::unique_ptr<std::string>& data): value(SMART_OWNED_MOVE(data))   {}
+    JsonNumberItem(std::unique_ptr<std::string>& data): value(std::move(data))   {}
 
     virtual void print(std::ostream& stream) const    { stream << *value; }
     private:
@@ -156,7 +156,7 @@ struct JsonNULLItem: JsonValue
 struct JsonMapItem: JsonValue
 {
     std::unique_ptr<JsonMap>          value;
-    JsonMapItem(std::unique_ptr<JsonMap>& data): value(SMART_OWNED_MOVE(data))    {}
+    JsonMapItem(std::unique_ptr<JsonMap>& data): value(std::move(data))    {}
 
     virtual void print(std::ostream& stream) const    { stream << *value; }
     private:
@@ -164,7 +164,7 @@ struct JsonMapItem: JsonValue
 struct JsonArrayItem: JsonValue
 {
     std::unique_ptr<JsonArray>        value;
-    JsonArrayItem(std::unique_ptr<JsonArray>& data): value(SMART_OWNED_MOVE(data))    {}
+    JsonArrayItem(std::unique_ptr<JsonArray>& data): value(std::move(data))    {}
 
     virtual void print(std::ostream& stream) const    { stream << *value; }
     private:

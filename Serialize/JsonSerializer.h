@@ -328,7 +328,7 @@ struct JsonDeSerialize<T, A, RegisterKey, Map>
     static void activate(JsonSerializeItem<T, A, RegisterKey> const& item, ThorsAnvil::Json::ScannerSax& parser, T& dst)
     {
         std::unique_ptr<ThorsAnvil::Json::SaxAction>    action(item.accessor.action(dst));
-        parser.registerAction(item.memberName, SMART_OWNED_MOVE(action));
+        parser.registerAction(item.memberName, std::move(action));
     }
 };
 template<typename T, typename A>
@@ -337,7 +337,7 @@ struct JsonDeSerialize<T, A, int, Array>
     static void activate(JsonSerializeItem<T, A, int> const& item, ThorsAnvil::Json::ScannerSax& parser, T& dst)
     {
         std::unique_ptr<ThorsAnvil::Json::SaxAction>    action(item.accessor.action(dst));
-        parser.registerActionOnAllArrItems(SMART_OWNED_MOVE(action));
+        parser.registerActionOnAllArrItems(std::move(action));
     }
 };
 
@@ -347,7 +347,7 @@ struct JsonDeSerialize<T, A, std::string, Array>
     static void activate(JsonSerializeItem<T, A, std::string> const& item, ThorsAnvil::Json::ScannerSax& parser, T& dst)
     {
         std::unique_ptr<ThorsAnvil::Json::SaxAction>    action(item.accessor.action(dst));
-        parser.registerActionNext(SMART_OWNED_MOVE(action));
+        parser.registerActionNext(std::move(action));
     }
 };
 

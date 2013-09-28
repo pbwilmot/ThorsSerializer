@@ -137,7 +137,7 @@ struct ParserDomInterface: ParserCleanInterface
     virtual JsonMap*        mapCreate(JsonMapValue* val)                        { std::unique_ptr<JsonMapValue>aval(val);std::unique_ptr<JsonMap> amap(new JsonMap());amap->insert(*(aval->first), aval->second.release());return amap.release();}
     virtual JsonMap*        mapAppend(JsonMap* map, JsonMapValue* val)          { std::unique_ptr<JsonMapValue>aval(val);std::unique_ptr<JsonMap> amap(map);          amap->insert(*(aval->first), aval->second.release());return amap.release();}
     virtual JsonMapValue*   mapCreateElement(std::string* k,JsonValue* val)     { std::unique_ptr<JsonValue>  aval(val);std::unique_ptr<std::string> ak(k);
-                                                                                  std::unique_ptr<JsonMapValue> result(new JsonMapValue);result->first = SMART_OWNED_MOVE(ak);result->second = SMART_OWNED_MOVE(aval);
+                                                                                  std::unique_ptr<JsonMapValue> result(new JsonMapValue);result->first = std::move(ak);result->second = std::move(aval);
                                                                                   return result.release();
                                                                                 }
     virtual std::string*    mapKeyNote(std::string* k)                          { return k;}
