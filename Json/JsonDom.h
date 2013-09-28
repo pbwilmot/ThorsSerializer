@@ -49,7 +49,7 @@ struct JsonObject
         JsonArray*  array;
     } data;
 };
-typedef std::pair<SMART_OWNED_PTR<std::string>,SMART_OWNED_PTR<JsonValue> >     JsonMapValue;
+typedef std::pair<std::unique_ptr<std::string>,std::unique_ptr<JsonValue> >     JsonMapValue;
 
 /*
  * Json only supports three types:
@@ -118,8 +118,8 @@ struct JsonValue
 };
 struct JsonStringItem: JsonValue
 {
-    SMART_OWNED_PTR<std::string>     value;
-    JsonStringItem(SMART_OWNED_PTR<std::string>& data): value(SMART_OWNED_MOVE(data)) {}
+    std::unique_ptr<std::string>     value;
+    JsonStringItem(std::unique_ptr<std::string>& data): value(SMART_OWNED_MOVE(data)) {}
 
     virtual void print(std::ostream& stream) const    { stream << '"' << *value << '"'; }
     private:
@@ -127,8 +127,8 @@ struct JsonStringItem: JsonValue
 };
 struct JsonNumberItem: JsonValue
 {
-    SMART_OWNED_PTR<std::string>     value;
-    JsonNumberItem(SMART_OWNED_PTR<std::string>& data): value(SMART_OWNED_MOVE(data))   {}
+    std::unique_ptr<std::string>     value;
+    JsonNumberItem(std::unique_ptr<std::string>& data): value(SMART_OWNED_MOVE(data))   {}
 
     virtual void print(std::ostream& stream) const    { stream << *value; }
     private:
@@ -155,16 +155,16 @@ struct JsonNULLItem: JsonValue
 };
 struct JsonMapItem: JsonValue
 {
-    SMART_OWNED_PTR<JsonMap>          value;
-    JsonMapItem(SMART_OWNED_PTR<JsonMap>& data): value(SMART_OWNED_MOVE(data))    {}
+    std::unique_ptr<JsonMap>          value;
+    JsonMapItem(std::unique_ptr<JsonMap>& data): value(SMART_OWNED_MOVE(data))    {}
 
     virtual void print(std::ostream& stream) const    { stream << *value; }
     private:
 };
 struct JsonArrayItem: JsonValue
 {
-    SMART_OWNED_PTR<JsonArray>        value;
-    JsonArrayItem(SMART_OWNED_PTR<JsonArray>& data): value(SMART_OWNED_MOVE(data))    {}
+    std::unique_ptr<JsonArray>        value;
+    JsonArrayItem(std::unique_ptr<JsonArray>& data): value(SMART_OWNED_MOVE(data))    {}
 
     virtual void print(std::ostream& stream) const    { stream << *value; }
     private:

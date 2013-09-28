@@ -75,9 +75,9 @@ class JsonContainerAttributeAccessor<std::map<std::string, V> >
             }
         }
     }
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      action(std::map<std::string,V>& dst) const
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      action(std::map<std::string,V>& dst) const
     {
-        SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>  action(new_JsonImportAction<typename JsonSerializeTraits<V>::SerializeInfo>(dst));
+        std::unique_ptr<ThorsAnvil::Json::SaxAction>  action(new_JsonImportAction<typename JsonSerializeTraits<V>::SerializeInfo>(dst));
         return action;
     }
 };

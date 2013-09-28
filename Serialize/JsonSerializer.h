@@ -327,7 +327,7 @@ struct JsonDeSerialize<T, A, RegisterKey, Map>
 {
     static void activate(JsonSerializeItem<T, A, RegisterKey> const& item, ThorsAnvil::Json::ScannerSax& parser, T& dst)
     {
-        SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>    action(item.accessor.action(dst));
+        std::unique_ptr<ThorsAnvil::Json::SaxAction>    action(item.accessor.action(dst));
         parser.registerAction(item.memberName, SMART_OWNED_MOVE(action));
     }
 };
@@ -336,7 +336,7 @@ struct JsonDeSerialize<T, A, int, Array>
 {
     static void activate(JsonSerializeItem<T, A, int> const& item, ThorsAnvil::Json::ScannerSax& parser, T& dst)
     {
-        SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>    action(item.accessor.action(dst));
+        std::unique_ptr<ThorsAnvil::Json::SaxAction>    action(item.accessor.action(dst));
         parser.registerActionOnAllArrItems(SMART_OWNED_MOVE(action));
     }
 };
@@ -346,7 +346,7 @@ struct JsonDeSerialize<T, A, std::string, Array>
 {
     static void activate(JsonSerializeItem<T, A, std::string> const& item, ThorsAnvil::Json::ScannerSax& parser, T& dst)
     {
-        SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>    action(item.accessor.action(dst));
+        std::unique_ptr<ThorsAnvil::Json::SaxAction>    action(item.accessor.action(dst));
         parser.registerActionNext(SMART_OWNED_MOVE(action));
     }
 };
@@ -626,9 +626,9 @@ class JsonSerialElementAccessor
     {
         stream << jsonInternalExport(src.*memberPtr);
     }
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      action(T& dst) const
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      action(T& dst) const
     {
-        SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>  action(new_JsonImportAction<typename SerTraits::SerializeInfo>(dst, memberPtr));
+        std::unique_ptr<ThorsAnvil::Json::SaxAction>  action(new_JsonImportAction<typename SerTraits::SerializeInfo>(dst, memberPtr));
         return action;
     }
 };

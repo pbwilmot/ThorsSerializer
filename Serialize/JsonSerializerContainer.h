@@ -164,9 +164,9 @@ class JsonContainerAttributeAccessor
             }
         }
     }
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      action(C& dst) const
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      action(C& dst) const
     {
-        SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>  action(new_JsonImportAction<typename JsonSerializeTraits<typename ContainerTraits<C>::DataType>::SerializeInfo>(dst));
+        std::unique_ptr<ThorsAnvil::Json::SaxAction>  action(new_JsonImportAction<typename JsonSerializeTraits<typename ContainerTraits<C>::DataType>::SerializeInfo>(dst));
         return action;
     }
 };

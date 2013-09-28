@@ -10,12 +10,12 @@ int ParserRecursive::error(int /*val*/, std::string const& msg)
     throw ThorsAnvil::Json::ParsingError(msg);
 }
 
-int ParserRecursive::JsonValueParse(int val, SMART_OWNED_PTR<JsonValue>& value)
+int ParserRecursive::JsonValueParse(int val, std::unique_ptr<JsonValue>& value)
 {
     switch(val)
     {
         case '{':                                       {
-                                                            SMART_OWNED_PTR<JsonMap>      map;
+                                                            std::unique_ptr<JsonMap>      map;
                                                             int result = JsonMapParse(yylex(), map);
                                                             if (result == 0)
                                                             {   value.reset(pi.valueParseMap(map.release()));
@@ -23,7 +23,7 @@ int ParserRecursive::JsonValueParse(int val, SMART_OWNED_PTR<JsonValue>& value)
                                                             return result;
                                                         }
         case '[':                                       {
-                                                            SMART_OWNED_PTR<JsonArray>    array;
+                                                            std::unique_ptr<JsonArray>    array;
                                                             int result = JsonArrayParse(yylex(), array);
                                                             if (result == 0)
                                                             {   value.reset(pi.valueParseArray(array.release()));
@@ -39,18 +39,18 @@ int ParserRecursive::JsonValueParse(int val, SMART_OWNED_PTR<JsonValue>& value)
     }
     return error(val, "syntax error");
 }
-int ParserRecursive::JsonMapValueListParse(int val, SMART_OWNED_PTR<JsonMap>& map)
+int ParserRecursive::JsonMapValueListParse(int val, std::unique_ptr<JsonMap>& map)
 {
     if (val == yy::ParserShiftReduce::token::JSON_STRING)
     {
-        SMART_OWNED_PTR<std::string>  key(pi.getStringLexer(lexer));
+        std::unique_ptr<std::string>  key(pi.getStringLexer(lexer));
         if ((val = yylex()) == ':')
         {
             key.reset(pi.mapKeyNote(key.release()));
-            SMART_OWNED_PTR<JsonValue>    value;
+            std::unique_ptr<JsonValue>    value;
             if ((val = JsonValueParse(yylex(), value)) == 0)
             {
-                SMART_OWNED_PTR<JsonMapValue>   mapValue(pi.mapCreateElement(key.release(), value.release()));
+                std::unique_ptr<JsonMapValue>   mapValue(pi.mapCreateElement(key.release(), value.release()));
                 if (map.get() == NULL)
                 {
                     map.reset(pi.mapCreate(mapValue.release()));
@@ -72,9 +72,9 @@ int ParserRecursive::JsonMapValueListParse(int val, SMART_OWNED_PTR<JsonMap>& ma
     return error(val, "syntax error");
 }
 
-int ParserRecursive::JsonArrayValueListParse(int val, SMART_OWNED_PTR<JsonArray>& array)
+int ParserRecursive::JsonArrayValueListParse(int val, std::unique_ptr<JsonArray>& array)
 {
-    SMART_OWNED_PTR<JsonValue>    value;
+    std::unique_ptr<JsonValue>    value;
     if ((val = JsonValueParse(val, value)) == 0)
     {
         value.reset(pi.arrayCreateElement(value.release()));
@@ -96,7 +96,7 @@ int ParserRecursive::JsonArrayValueListParse(int val, SMART_OWNED_PTR<JsonArray>
     }
     return error(val, "syntax error");
 } 
-int ParserRecursive::JsonMapParse(int val, SMART_OWNED_PTR<JsonMap>& map)
+int ParserRecursive::JsonMapParse(int val, std::unique_ptr<JsonMap>& map)
 {
     pi.mapOpen();
     int result;
@@ -112,7 +112,7 @@ int ParserRecursive::JsonMapParse(int val, SMART_OWNED_PTR<JsonMap>& map)
     pi.mapClose();
     return result;
 }
-int ParserRecursive::JsonArrayParse(int val, SMART_OWNED_PTR<JsonArray>& array)
+int ParserRecursive::JsonArrayParse(int val, std::unique_ptr<JsonArray>& array)
 {
     pi.arrayOpen();
     int result;
@@ -131,8 +131,8 @@ int ParserRecursive::JsonArrayParse(int val, SMART_OWNED_PTR<JsonArray>& array)
 int ParserRecursive::parseJosnObject(int val)
 {
     int                           result;
-    SMART_OWNED_PTR<JsonMap>      map;
-    SMART_OWNED_PTR<JsonArray>    array;
+    std::unique_ptr<JsonMap>      map;
+    std::unique_ptr<JsonArray>    array;
     switch(val)
     {
         case '{':   result = JsonMapParse(yylex(), map);     pi.doneMap(map.release());    return result;

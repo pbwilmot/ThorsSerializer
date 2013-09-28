@@ -39,7 +39,7 @@ TEST(ScannerSax, ShiftReduceScanMapEmpty)
     bool                                            preAction;
     bool                                            action;
     int                                             value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
 
     std::stringstream                               json("{}");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -57,7 +57,7 @@ TEST(ScannerSax, ShiftReduceScanMapMiss)
     bool                                            preAction;
     bool                                            action;
     int                                             value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
 
     std::stringstream                               json("{ \"I2\" : 1}");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -75,7 +75,7 @@ TEST(ScannerSax, ShiftReduceScanMapHit)
     bool                                            preAction;
     bool                                            action;
     int                                             value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
 
     std::stringstream                               json("{ \"I1\" : 123}");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -94,7 +94,7 @@ TEST(ScannerSax, ShiftReduceScanArrayEmpty)
     bool                                            preAction;
     bool                                            action;
     bool                                            value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
 
     std::stringstream                               json("[]");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -112,8 +112,8 @@ TEST(ScannerSax, ShiftReduceScanArrayMiss)
     bool                                            preAction;
     bool                                            action;
     bool                                            value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      emptyAction;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      emptyAction;
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
 
     std::stringstream                               json("[ true ]");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -132,8 +132,8 @@ TEST(ScannerSax, ShiftReduceScanArrayHit)
     bool                                            preAction;
     bool                                            action;
     bool                                            value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      emptyAction;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      emptyAction;
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
 
     std::stringstream                               json("[ 512, true ]");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -154,7 +154,7 @@ TEST(ScannerSax, RecursiveScanMapEmpty)
     bool                                            preAction;
     bool                                            action;
     std::string                                     value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<std::string>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<std::string>(count, preAction, action, value));
 
     std::stringstream                               json("{}");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -172,7 +172,7 @@ TEST(ScannerSax, RecursiveScanMapMiss)
     bool                                            preAction;
     bool                                            action;
     std::string                                     value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<std::string>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<std::string>(count, preAction, action, value));
 
     std::stringstream                               json("{ \"I2\" : \"S1\"}");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -190,7 +190,7 @@ TEST(ScannerSax, RecursiveScanMapHit)
     bool                                            preAction;
     bool                                            action;
     std::string                                     value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<std::string>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<std::string>(count, preAction, action, value));
 
     std::stringstream                               json("{ \"I1\" : \"123SS\"}");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -209,7 +209,7 @@ TEST(ScannerSax, RecursiveScanArrayEmpty)
     bool                                            preAction;
     bool                                            action;
     bool                                            value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
 
     std::stringstream                               json("[]");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -227,8 +227,8 @@ TEST(ScannerSax, RecursiveScanArrayMiss)
     bool                                            preAction;
     bool                                            action;
     bool                                            value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      emptyAction;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      emptyAction;
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
 
     std::stringstream                               json("[ false ]");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -248,8 +248,8 @@ TEST(ScannerSax, RecursiveScanArrayHit)
     bool                                            preAction;
     bool                                            action;
     bool                                            value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      emptyAction;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      emptyAction;
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
 
     std::stringstream                               json("[ 512, false ]");
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -269,18 +269,18 @@ TEST(ScannerSax, ReplaceAction)
     bool                                            preAction;
     bool                                            action;
     int                                             value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
 
     int                                             count2;
     bool                                            preAction2;
     bool                                            action2;
     int                                             value2;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction2(new TestAction<int>(count2, preAction2, action2, value2));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction2(new TestAction<int>(count2, preAction2, action2, value2));
 
 
     ThorsAnvil::Json::ScannerSax                    scanner;
 
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      emptyAction;
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      emptyAction;
     scanner.registerActionNext(SMART_OWNED_MOVE(emptyAction));
 
     ThorsAnvil::Json::ActionRefNote actNote = scanner.registerActionNext(SMART_OWNED_MOVE(saxAction));
@@ -304,7 +304,7 @@ TEST(ScannerSax, DefaultArrayAction)
     bool                                            preAction;
     bool                                            action;
     int                                             value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
 
 
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -326,7 +326,7 @@ TEST(ScannerSax, DefaultMapAction)
     bool                                            preAction;
     bool                                            action;
     int                                             value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<int>(count, preAction, action, value));
 
 
     ThorsAnvil::Json::ScannerSax                    scanner;
@@ -348,7 +348,7 @@ TEST(ScannerSax, GetNullValue)
     bool                                            preAction;
     bool                                            action;
     bool                                            value;
-    SMART_OWNED_PTR<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
+    std::unique_ptr<ThorsAnvil::Json::SaxAction>      saxAction(new TestAction<bool>(count, preAction, action, value));
 
 
     ThorsAnvil::Json::ScannerSax                    scanner;
