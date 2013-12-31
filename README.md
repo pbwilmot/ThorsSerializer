@@ -21,6 +21,10 @@ Objective:
     that speak JSON. The main envisioned usage was for mobile devices were many
     small JSON objects are transfered in both directions.
 
+Simple Wokring Example using CURL
+
+    https://gist.github.com/Loki-Astari/8201956
+
 Build instructions (SIMPLE)
 
     make -f MakeSimple
