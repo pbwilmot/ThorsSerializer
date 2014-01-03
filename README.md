@@ -2,7 +2,7 @@
 
 Yet another JSON serialization library for C++
 
-Objective:
+###Objective:
 
     The objective is to make serialization/de-serialization of C++ object to/from
     JSON trivial.
@@ -21,11 +21,11 @@ Objective:
     that speak JSON. The main envisioned usage was for mobile devices were many
     small JSON objects are transfered in both directions.
 
-Simple Wokring Example using CURL
+###Example Usage with ThorsSerializer
 
-    https://gist.github.com/Loki-Astari/8201956
+https://gist.github.com/Loki-Astari/8201956
 
-Build instructions (SIMPLE)
+###Build instructions (SIMPLE)
 
     make -f MakeSimple
     # Note this build a Serialize.a library
@@ -33,7 +33,7 @@ Build instructions (SIMPLE)
     #       The serialize library are mostly header files so you will still need these
     #       to include these from your own files.
 
-Building Notes:
+###Building Notes:
     This project can also use ThorMaker (which is just a set of makefiles) to build
     This not only builds the code but runs unit tests and checks the code coverage of the unit tests.
 
@@ -56,7 +56,7 @@ Building Notes:
     make install
 
 
-Example: C++11 (see code in test.cpp for full code)
+###Example: C++11 (see code in test.cpp for full code)
 
     /* A class that you want to serialize. */
     class MyClass
