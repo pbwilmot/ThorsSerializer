@@ -21,7 +21,7 @@ Yet another JSON serialization library for C++
     that speak JSON. The main envisioned usage was for mobile devices were many
     small JSON objects are transfered in both directions.
 
-###Example Usage with ThorsSerializer
+###Example Usage with ThorsStream
 
 https://gist.github.com/Loki-Astari/8201956
 
