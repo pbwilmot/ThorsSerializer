@@ -1,5 +1,18 @@
 #!/bin/bash
 
+#
+# Change this as required to point at the root of ThorsAnvil code
+FPN=$(pwd)/$0
+ROOT=$(dirname $FPN)
+THORSANVIL_ROOT=$(dirname ${ROOT})
+
+pushd ${THORSANVIL_ROOT}
+git submodule init
+git submodule update
+build/third/setup
+popd
+
+
 install="sudo apt-get --yes"
 
 host=`uname`
@@ -15,120 +28,5 @@ ${install} install flex
 if [[ "${host}" == "Linux" ]]; then
     ${install} install libboost-dev
     ${install} install libboost-doc
-fi
-
-# if we are using this as a sub project
-# Then do not set up the rest.
-# Note it is the responsibility of the parent project to make
-# sure these dependencies are available.
-if [[ "$1" == "build" ]]; then
-    cd ../build
-    ln -s $2/* .
-    exit
-fi
-
-ROOT=`pwd`
-
- #
- # Change this as required to point at the root of ThorsAnvil code
-THORSANVIL_ROOT=`dirname ${ROOT}`
-
-
-cd ${THORSANVIL_ROOT}
-git submodule init
-git submodule update
-cd build/third
-./setup
-cd ${ROOT}
-
-
-
- #
- # If you want to use your own version of boost set USE_INSTALLED_BOOST
- # to the directory containing 'boost' If not set it will search for the
- # boost tar.gz archive in the current directory and use that
- #
-USE_INSTALLED_BOOST=/usr/include
-
-
- #
- # Set to 1 to build boost library
- #
-BUILD_BOOST=0
-
- #
- # Set to 1 to build boost logging.
- # Note: this implies building the boost lib
- #
-BOOST_LOG=0
-
- #
- # If you want to use the unit test automatically you need this
- #
-
-
-
-if [[ ${USE_INSTALLED_BOOST} == "" ]]; then
-    echo "Trying: Un-archive boost"
-
-    BOOST_ARCHIVE=`ls boost_*.tar.gz 2>/dev/null | tail -n 1`
-    if [[ ${BOOST_ARCHIVE} == "" ]]; then
-        echo "Failed to find boost archieve  boost_*.tar.gz"
-        echo "Download from: http://sourceforge.net/projects/boost/files/boost/1.49.0/boost_1_49_0.tar.gz"
-        exit 1
-    fi
-    BOOST_ARCHIVE_DIR=${BOOST_ARCHIVE%.tar.gz}
-        
-    if [[ ! -d ${BOOST_ARCHIVE_DIR} ]]; then
-        tar xvzf ${BOOST_ARCHIVE}
-    fi
-
-    USE_INSTALLED_BOOST=`pwd`/${BOOST_ARCHIVE_DIR}
-fi
-
-cd ${ROOT}
-if [[ ${BOOST_LOG} == 1 ]]; then
-    echo "Setting up Boost-Log"
-
-    BOOST_LOG_ARCHIEVE=`ls boost-log-*.zip 2>/dev/null | tail -n 1`
-    if [[ ${BOOST_LOG_ARCHIEVE} == "" ]]; then
-        echo "Failed to find boost-log-*.zip"
-        echo "Download from: http://downloads.sourceforge.net/project/boost-log/boost-log-1.1.zip"
-        exit 1
-    fi
-    BOOST_LOG_ARCHIVE_DIR=${BOOST_LOG_ARCHIVE%.zip}
-
-    if [[ ! -d ${BOOST_LOG_ARCHIEVE_DIR} ]]; then
-        unzip ${BOOST_LOG_ARCHIVE}
-    fi
-
-    cd ${USE_INSTALLED_BOOST}/boost
-    rm -f log
-    ln -s ${ROOT}/${BOOST_LOG_ARCHIEVE_DIR}/boost/log .
-
-    cd ${USE_INSTALLED_BOOST}/libs
-    rm -f log
-    ln -s ${ROOT}/${BOOST_LOG_ARCHIEVE_DIR}/libs/log .
-
-    BUILD_BOOST=1
-
-fi
-
-cd ${ROOT}
-if [[ ${BUILD_BOOST} == 1 ]]; then
-    echo "Building Boost for ThorsAnvil"
-
-    cd ${USE_INSTALLED_BOOST}
-    ./bootstrap.sh --prefix=${THORSANVIL_ROOT}/build/ --includedir=${THORSANVIL_ROOT}/build/include3rd
-    ./b2 install
-
-
-else
-    echo "Linking Boost to ThorsAnvil Code"
-
-    cd ${THORSANVIL_ROOT}/build/include3rd
-    rm -f boost
-    ln -s ${USE_INSTALLED_BOOST}/boost .
-
 fi
 
