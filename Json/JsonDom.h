@@ -2,7 +2,6 @@
 #ifndef THORSANVIL_JSON_JSON_DOM
 #define THORSANVIL_JSON_JSON_DOM
 
-#include "portability.h"
 #include "JsonException.h"
 
 #include <boost/ptr_container/ptr_vector.hpp>
