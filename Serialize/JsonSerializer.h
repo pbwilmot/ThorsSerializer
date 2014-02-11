@@ -511,14 +511,14 @@ template<typename T>
 struct MemberScanner<T, T>
 {
     // A normal type with no SerializeInfo has no members thus no need to register callbacks.
-    void operator()(ThorsAnvil::Json::ScannerSax& scanner, T& destination)
+    void operator()(ThorsAnvil::Json::ScannerSax& /*scanner*/, T& /*destination*/)
     {}
 };
 template<typename T>
 struct MemberScanner<T, void>
 {
     // A normal type with no SerializeInfo has no members thus no need to register callbacks.
-    void operator()(ThorsAnvil::Json::ScannerSax& scanner, T& destination)
+    void operator()(ThorsAnvil::Json::ScannerSax& /*scanner*/, T& /*destination*/)
     {}
 };
 
@@ -556,7 +556,7 @@ struct MemberPrinter<T, T>
 template<typename T>
 struct MemberPrinter<T, void>
 {
-    void operator()(std::ostream& stream, T const& source)
+    void operator()(std::ostream& /*stream*/, T const& /*source*/)
     {}
 };
 

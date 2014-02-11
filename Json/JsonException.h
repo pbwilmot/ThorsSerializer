@@ -3,6 +3,7 @@
 #define THORSANVIL_JSON_JSON_EXCEPTION_H
 
 #include <stdexcept>
+#include <string>
 
 namespace ThorsAnvil
 {

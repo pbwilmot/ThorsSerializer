@@ -17,7 +17,7 @@ namespace ThorsAnvil
     namespace Json
     {
         
-class ParserInterface;
+struct ParserInterface;
 class LexerJson: public JsonBaseFlexLexer
 {
     public:

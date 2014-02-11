@@ -12,8 +12,11 @@ static void mergeJsonDom(JsonArray& dst, JsonArray& src, std::string const& erro
 /* Implementation */
 static void mergeJsonDom(JsonMap& dst, JsonMap& src, std::string const& errorMsg, std::string const& index)
 {
-    for(JsonMap::iterator loop = src.begin(); loop != src.end(); ++loop)
+    JsonMap::iterator next;
+    for(JsonMap::iterator loop = src.begin(); loop != src.end(); loop = next)
     {
+        next = loop;
+        ++next;
         JsonMap::iterator find = dst.find(loop->first);
         if (find == dst.end())
         {

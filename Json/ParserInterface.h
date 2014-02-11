@@ -15,7 +15,7 @@ namespace ThorsAnvil
     {
 
     class LexerJson;
-    class ParserInterface;
+    struct ParserInterface;
 
 /* Functions:
  *      std::string getString(LexerJson& lexer);
